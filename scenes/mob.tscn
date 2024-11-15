@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://p3jypmgo75b0"]
+
+[ext_resource type="Script" path="res://scripts/mob.gd" id="1_vy3i2"]
+[ext_resource type="Texture2D" uid="uid://gla8llfh2nen" path="res://assets/enemy/slime1.png" id="2_wwl7q"]
+[ext_resource type="Texture2D" uid="uid://d2ag5cyxp5eud" path="res://assets/enemy/slime2.png" id="3_5q8ui"]
+[ext_resource type="Texture2D" uid="uid://d3xbatmdvehuk" path="res://assets/enemy/slime3.png" id="4_fu5of"]
+[ext_resource type="Texture2D" uid="uid://dnlarbk8hidvi" path="res://assets/enemy/slime4.png" id="5_mdtaj"]
+[ext_resource type="Texture2D" uid="uid://6trj88ist71t" path="res://assets/enemy/slime5.png" id="6_2rwac"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k41l1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wwl7q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5q8ui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fu5of")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mdtaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2rwac")
+}],
+"loop": true,
+"name": &"bounce",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_28h1m"]
+radius = 33.0
+height = 66.0
+
+[node name="mob" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_vy3i2")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_k41l1")
+animation = &"bounce"
+frame = 1
+frame_progress = 0.266226
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_28h1m")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
